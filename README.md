@@ -1,5 +1,5 @@
 ## About
-[![FlakeHub](https://img.shields.io/endpoint?url=https://flakehub.com/f/Memonia/dockerComposeFlake/badge)](https://flakehub.com/flake/Memonia/dockerComposeFlake)
+[![FlakeHub](https://img.shields.io/endpoint?url=https://flakehub.com/f/Memonia/docker-compose.nix/badge)](https://flakehub.com/flake/Memonia/docker-compose.nix)
 
 This flake is a convenient wrapper around `docker compose up` project deployment, which additionally supports `jsonnet` compose files.
 
@@ -10,9 +10,9 @@ Add this flake to your `flake.nix`. First `#1`, specify dockerCompose flake as a
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
         # (1)
-        dockerCompose.url = "github:Memonia/dockerComposeFlake";
+        dockerCompose.url = "github:Memonia/docker-compose.nix";
         # Or pull from FlakeHub
-        # dockerCompose.url = https://flakehub.com/f/Memonia/dockerComposeFlake/<version>
+        # dockerCompose.url = https://flakehub.com/f/Memonia/docker-compose.nix/<version>
     };
 
     outputs = { nixpkgs, dockerCompose, ... }: {
