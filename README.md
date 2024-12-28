@@ -4,15 +4,19 @@
 This flake is a convenient wrapper around `docker compose up` project deployment, which additionally supports `jsonnet` compose files.
 
 ## Installation
-Add this flake to your `flake.nix`. First `#1`, specify dockerCompose flake as an input, then `#2` make it available under the `config` set.
+Add this flake to your `flake.nix`. First `#1`, specify dockerCompose flake as an input, then `#2` make it available under the `config` set. Optionally `#3`, you can make the module's `nixpkgs` match your own input. 
 ```nix
 {
     inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+		
         # (1)
         dockerCompose.url = "github:Memonia/docker-compose.nix";
         # Or pull from FlakeHub
         # dockerCompose.url = https://flakehub.com/f/Memonia/docker-compose.nix/<version>
+
+		# (3)
+		dockerCompose.inputs.nixpkgs.follows = "nixpkgs";
     };
 
     outputs = { nixpkgs, dockerCompose, ... }: {
