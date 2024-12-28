@@ -1,0 +1,19 @@
+name: 'ci'
+on:
+  push:
+    branches: [ 'main', 'dev' ]
+  workflow_call:
+
+jobs:
+  check:
+    name: 'check'
+    runs-on: 'ubuntu-latest'
+    steps:
+    - name: 'checkout'
+      uses: 'actions/checkout@v4'
+
+    - name: 'setup-nix'
+      uses: 'DeterminateSystems/nix-installer-action@main'
+
+    - name: 'check'
+      run: 'nix flake check --all-systems'
