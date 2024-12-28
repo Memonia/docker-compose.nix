@@ -1,0 +1,39 @@
+name: 'flakehub'
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: 'string'
+        required: true
+        description: 'The existing tag to publish to FlakeHub'
+
+jobs:
+  ci:
+    name: 'ci'
+    uses: './.github/workflows/ci.yaml'
+    
+  push:
+    name: 'push'
+    runs-on: 'ubuntu-latest'
+    permissions:
+      id-token: 'write'
+      contents: 'read'
+    steps:
+      - name: 'checkout'
+        uses: 'actions/checkout@v4'
+        with:
+          ref: "${{ (inputs.tag != null) && format('refs/tags/{0}', inputs.tag) || '' }}"
+      
+      - name: 'setup-nix'
+        uses: 'DeterminateSystems/nix-installer-action@main'
+      
+      - name: 'push'
+        uses: 'DeterminateSystems/flakehub-push@main'
+        with:
+          tag: '${{ inputs.tag }}'
+          name: 'Memonia/docker-compose.nix'
+          visibility: 'public'
+          include-output-paths: true

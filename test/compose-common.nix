@@ -3,7 +3,7 @@
 let
 	echoPort = 11111;
 	echoData = "Hi!";
-	vmBaseImageFile = "/tmp/dockerCompose/alpine";
+	vmImageFile = "/tmp/dockerCompose/echo";
 
 	# The VM has no internet access, so we build the test image outside and transfer it there
 	testDockerImage = pkgs.dockerTools.buildImage {
@@ -53,11 +53,11 @@ in
 		};
 
 		testScript = ''
-            node.copy_from_host('${testDockerImage}', '${vmBaseImageFile}'); 
+            node.copy_from_host('${testDockerImage}', '${vmImageFile}'); 
 
             node.wait_for_unit('docker.socket')
             node.wait_for_unit('docker.service')
-            node.succeed('docker load -i "${vmBaseImageFile}"')
+            node.succeed('docker load -i "${vmImageFile}"')
 
             # Make sure the service is started after the image has become available
             node.succeed('systemctl restart "${name}.service"')
