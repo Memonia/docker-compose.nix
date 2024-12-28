@@ -15,8 +15,8 @@ Add this flake to your `flake.nix`. First `#1`, specify dockerCompose flake as a
         # Or pull from FlakeHub
         # dockerCompose.url = https://flakehub.com/f/Memonia/docker-compose.nix/<version>
 
-		# (3)
-		dockerCompose.inputs.nixpkgs.follows = "nixpkgs";
+	# (3)
+	dockerCompose.inputs.nixpkgs.follows = "nixpkgs";
     };
 
     outputs = { nixpkgs, dockerCompose, ... }: {
@@ -25,6 +25,7 @@ Add this flake to your `flake.nix`. First `#1`, specify dockerCompose flake as a
                 system = "x86_64-linux";
                 modules = [
                     ./configuration.nix
+
                     # (2)
                     dockerCompose.nixosModules.default
                 ];
